@@ -17,8 +17,8 @@ const gulp           = require('gulp'),
 
 const PATHS = {
 			output:    'dist',
-			templates: 'app',
-			pages:     'app/pages',
+			app:       'app',
+			pages:     'app/_pages',
 			sass:      'app/sass/**/*.sass',
 			comjs:     'app/js/common.js',
 			libs:      'app/libs',
@@ -57,9 +57,9 @@ gulp.task('js', function() {
 // writing up the gulp nunjucks task
 gulp.task('nunjucks', function() {
 	console.log('Rendering nunjucks files..');
-	return gulp.src(PATHS.pages + '/**/*.html')
+	return gulp.src([PATHS.pages + '/**/*.html', [PATHS.app] + '/index.html'])
 	.pipe(nunjucksRender({
-		path: [PATHS.templates],
+		path: [PATHS.app],
 		watch: true,
 	}).on("error", notify.onError()))
 	.pipe(gulp.dest(PATHS.output));
@@ -70,7 +70,7 @@ gulp.task('watch', function() {
 	gulp.watch(PATHS.sass, ['styles']);
 	gulp.watch(PATHS.comjs, ['js']);
 
-	gulp.watch(PATHS.templates + '/**/*.html', ['nunjucks'])
+	gulp.watch(PATHS.app + '/*.html', ['nunjucks'])
 	gulp.watch(PATHS.output + '/*.html', browserSync.reload);
 });
 
