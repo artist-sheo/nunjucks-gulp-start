@@ -85,7 +85,7 @@ gulp.task('build', ['nunjucks', 'styles', 'js', 'image'], function() {
 	.pipe(gulp.dest(PATHS.output + '/fonts'));
 });
 
-gulp.task('default', ['browserSync', 'watch']);
+gulp.task('default', ['browserSync', 'build', 'watch']);
 
 
 
